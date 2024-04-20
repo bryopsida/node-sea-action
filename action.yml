@@ -4,19 +4,25 @@ author: 'bryopsida'
 inputs:
   working-dir:
     type: 'string'
+    description: 'Working directory for action'
+    default: '.'
+    required: false
+  path-to-app:
+    type: 'string'
+    description: 'Path to the JS app, relative to the working directory'
+    default: 'dist/app.js'
+    required: false
+  output-dir:
+    type: 'string'
+    description: 'Path where the executable will be placed'
   executable-name:
     type: 'string'
+    description: 'Executable name'
+    required: true
   sea-config-path:
     type: 'string'
-  esbuild-cmd:
-    type: 'string'
-  sign-executable:
-    type: 'boolean'
-
-outputs:
-  executable-path:
-    description: 'Path to the executable'
-    type: 'string'
+    description: 'Path to the json file holding the sea config: https://nodejs.org/api/single-executable-applications.html#generating-single-executable-preparation-blobs'
+    required: true
 
 runs:
   using: node20
