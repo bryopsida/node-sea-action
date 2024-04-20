@@ -1,18 +1,22 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-
-# Define your inputs here.
+name: 'Node.JS Single Executable Application Action'
+description: 'Builds a Node.JS SEA (Single Executable Application)'
+author: 'bryopsida'
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
+  working-dir:
+    type: 'string'
+  executable-name:
+    type: 'string'
+  sea-config-path:
+    type: 'string'
+  esbuild-cmd:
+    type: 'string'
+  sign-executable:
+    type: 'boolean'
 
-# Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  executable-path:
+    description: 'Path to the executable'
+    type: 'string'
 
 runs:
   using: node20
