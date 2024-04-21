@@ -39,7 +39,7 @@ async function run() {
 
   // remove existing code signature on node binary
   if (os === 'win32') {
-    execSync(`signtool remove /s ${nodeDest}`)
+    execSync(`signtool.exe remove /s ${nodeDest}`)
   } else if (os === 'darwin') {
     execSync(`codesign --remove-signature ${nodeDest}`)
   }
