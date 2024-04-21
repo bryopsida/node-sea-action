@@ -8,6 +8,7 @@ inputs:
       'path to the node executable, if not provided it uses one running the
       action'
     required: false
+    default: ''
   working-dir:
     type: 'string'
     description: 'Working directory for action'
