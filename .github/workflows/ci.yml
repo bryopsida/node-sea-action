@@ -61,7 +61,6 @@ jobs:
           working-dir: .
           output-dir: build
           executable-name: print-process
-          path-to-app: test-app/print-process.js
           sea-config-path: test-app/sea-config.json
 
       - uses: actions/upload-artifact@v4

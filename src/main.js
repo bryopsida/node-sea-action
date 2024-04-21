@@ -4,6 +4,7 @@ const { resolve, join } = require('node:path')
 const { platform } = require('node:os')
 const { execSync } = require('node:child_process')
 const { inject } = require('postject')
+
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -13,17 +14,21 @@ async function run() {
   const workingDir = core.getInput('working-dir')
   const outputPath = core.getInput('output-dir')
   const executableName = core.getInput('executable-name')
+  const pathToNode = resolve(process.argv[0])
+
+  core.info(`Node version is: ${process.version}`)
+  core.info(`Node path is: ${pathToNode}`)
 
   const os = platform()
+  core.info(`OS Platform is: ${os}`)
   const buildFolder = resolve(join(process.cwd(), outputPath))
   await mkdir(buildFolder, {
     recursive: true
   })
 
   const seaJsonPath = resolve(join(workingDir, seaConfigPath))
-  execSync(`node --experimental-sea-config ${seaJsonPath}`)
+  execSync(`${pathToNode} --experimental-sea-config ${seaJsonPath}`)
 
-  const pathToNode = resolve(process.argv[0])
   let nodeDest = join(buildFolder, executableName)
 
   if (os === 'win32' && !executableName.endsWith('.exe')) {
