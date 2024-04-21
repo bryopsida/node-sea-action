@@ -1,5 +1,5 @@
 const core = require('@actions/core')
-const { mkdir, stat, rm, cp, writeFile, readFile } = require('node:fs/promises')
+const { mkdir, cp, readFile } = require('node:fs/promises')
 const { resolve, join } = require('node:path')
 const { platform } = require('node:os')
 const { execSync } = require('node:child_process')
@@ -12,9 +12,6 @@ async function run() {
   const workingDir = core.getInput('working-dir')
   const outputPath = core.getInput('output-dir')
   const executableName = core.getInput('executable-name')
-  const appPath = core.getInput('path-to-app')
-
-
 
   const os = platform()
   const buildFolder = resolve(join(process.cwd(), outputPath))
@@ -38,7 +35,7 @@ async function run() {
   } else if (os === 'darwin') {
     execSync(`codesign --remove-signature ${nodeDest}`)
   }
-  const seaConfigContents = await readFile(seaJsonPath, { 
+  const seaConfigContents = await readFile(seaJsonPath, {
     encoding: 'utf8'
   })
   const seaConfig = json.Parse(seaConfigContents)
@@ -46,11 +43,15 @@ async function run() {
   const blobPath = seaConfig.output
 
   // TODO: switch to postject api call
-  // if (os === 'darwin') {
-  //   execSync(`npx postject ${nodeDest} NODE_SEA_BLOB ${blobPath} --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --macho-segment-name NODE_SEA`)
-  // } else {
-  //   execSync(`npx postject ${nodeDest} NODE_SEA_BLOB ${blobPath} --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2`)
-  // }
+  if (os === 'darwin') {
+    execSync(
+      `npx postject ${nodeDest} NODE_SEA_BLOB ${blobPath} --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --macho-segment-name NODE_SEA`
+    )
+  } else {
+    execSync(
+      `npx postject ${nodeDest} NODE_SEA_BLOB ${blobPath} --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2`
+    )
+  }
 }
 
 module.exports = {
