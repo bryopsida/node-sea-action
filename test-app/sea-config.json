@@ -1,0 +1,7 @@
+{
+  "main": "./test-app/print-process.js",
+  "output": "./build/print-process.blob",
+  "disableExperimentalSEAWarning": true,
+  "useSnapshot": false,
+  "useCodeCache": false
+}

@@ -7,11 +7,6 @@ inputs:
     description: 'Working directory for action'
     default: '.'
     required: false
-  path-to-app:
-    type: 'string'
-    description: 'Path to the JS app, relative to the working directory'
-    default: 'dist/app.js'
-    required: false
   output-dir:
     type: 'string'
     description: 'Path where the executable will be placed'
