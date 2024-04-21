@@ -14,8 +14,7 @@ permissions:
 jobs:
   test-javascript:
     name: JavaScript Tests
-    runs-on: ubuntu-latest
-
+    runs-on: 'ubuntu-latest'
     steps:
       - name: Checkout
         id: checkout
@@ -46,8 +45,10 @@ jobs:
 
   test-action:
     name: GitHub Actions Test
-    runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         id: checkout
