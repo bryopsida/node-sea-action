@@ -46,7 +46,7 @@ async function run() {
   const seaConfigContents = await readFile(seaJsonPath, {
     encoding: 'utf8'
   })
-  const seaConfig = JSON.Parse(seaConfigContents)
+  const seaConfig = JSON.parse(seaConfigContents)
 
   const blobPath = seaConfig.output
 
