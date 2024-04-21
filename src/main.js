@@ -16,7 +16,9 @@ async function run() {
 
   const os = platform()
   const buildFolder = resolve(join(process.cwd(), outputPath))
-  await mkdir(resolve(join(process.cwd(), buildFolder)))
+  await mkdir(buildFolder, {
+    recursive: true
+  })
 
   const seaJsonPath = resolve(join(workingDir, seaConfigPath))
   execSync(`node --experimental-sea-config ${seaJsonPath}`)

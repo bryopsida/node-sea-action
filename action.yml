@@ -21,7 +21,9 @@ inputs:
     required: true
   sea-config-path:
     type: 'string'
-    description: 'Path to the json file holding the sea config: https://nodejs.org/api/single-executable-applications.html#generating-single-executable-preparation-blobs'
+    description:
+      'Path to the json file holding the sea config:
+      https://nodejs.org/api/single-executable-applications.html#generating-single-executable-preparation-blobs'
     required: true
 
 runs:
