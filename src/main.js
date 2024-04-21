@@ -3,6 +3,7 @@ const { mkdir, cp, readFile } = require('node:fs/promises')
 const { resolve, join } = require('node:path')
 const { platform } = require('node:os')
 const { execSync } = require('node:child_process')
+const { inject } = require('postject')
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -38,20 +39,18 @@ async function run() {
   const seaConfigContents = await readFile(seaJsonPath, {
     encoding: 'utf8'
   })
-  const seaConfig = json.Parse(seaConfigContents)
+  const seaConfig = JSON.Parse(seaConfigContents)
 
   const blobPath = seaConfig.output
 
   // TODO: switch to postject api call
-  if (os === 'darwin') {
-    execSync(
-      `npx postject ${nodeDest} NODE_SEA_BLOB ${blobPath} --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --macho-segment-name NODE_SEA`
-    )
-  } else {
-    execSync(
-      `npx postject ${nodeDest} NODE_SEA_BLOB ${blobPath} --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2`
-    )
+  const opts = {
+    sentinelFuse: 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2'
   }
+  if (os === 'darwin') {
+    opts.machoSegmentName = 'NODE_SEA'
+  }
+  await inject(nodeDest, 'NODE_SEA_BLOB', blobPath, opts)
 }
 
 module.exports = {
