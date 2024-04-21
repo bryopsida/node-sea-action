@@ -1,0 +1,33 @@
+name: 'Node.JS Single Executable Application Action'
+description: 'Builds a Node.JS SEA (Single Executable Application)'
+author: 'bryopsida'
+inputs:
+  node-path:
+    type: 'string'
+    description:
+      'path to the node executable, if not provided it uses one running the
+      action'
+    required: false
+    default: ''
+  working-dir:
+    type: 'string'
+    description: 'Working directory for action'
+    default: '.'
+    required: false
+  output-dir:
+    type: 'string'
+    description: 'Path where the executable will be placed'
+  executable-name:
+    type: 'string'
+    description: 'Executable name'
+    required: true
+  sea-config-path:
+    type: 'string'
+    description:
+      'Path to the json file holding the sea config:
+      https://nodejs.org/api/single-executable-applications.html#generating-single-executable-preparation-blobs'
+    required: true
+
+runs:
+  using: node20
+  main: dist/index.js
