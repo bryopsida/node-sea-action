@@ -52,7 +52,7 @@ sea-action:
 
     - name: SEA
       id: sea
-      uses: ./
+      uses: bryopsida/node-sea-action@v1
       with:
         working-dir: .
         output-dir: build
