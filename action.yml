@@ -2,6 +2,12 @@ name: 'Node.JS Single Executable Application Action'
 description: 'Builds a Node.JS SEA (Single Executable Application)'
 author: 'bryopsida'
 inputs:
+  node-path:
+    type: 'string'
+    description:
+      'path to the node executable, if not provided it uses one running the
+      action'
+    required: false
   working-dir:
     type: 'string'
     description: 'Working directory for action'

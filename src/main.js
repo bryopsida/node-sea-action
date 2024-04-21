@@ -14,9 +14,11 @@ async function run() {
   const workingDir = core.getInput('working-dir')
   const outputPath = core.getInput('output-dir')
   const executableName = core.getInput('executable-name')
-  const pathToNode = resolve(process.argv[0])
+  const inputNodePath = core.getInput('node-path')
+  const pathToNode =
+    inputNodePath != null ? resolve(inputNodePath) : resolve(process.argv[0])
 
-  core.info(`Node version is: ${process.version}`)
+  core.info(`Runtime Node version is: ${process.version}`)
   core.info(`Node path is: ${pathToNode}`)
 
   const os = platform()
