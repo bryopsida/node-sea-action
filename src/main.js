@@ -56,7 +56,8 @@ async function run() {
   if (os === 'darwin') {
     opts.machoSegmentName = 'NODE_SEA'
   }
-  await inject(nodeDest, 'NODE_SEA_BLOB', blobPath, opts)
+  const resourceBlob = await readFile(blobPath)
+  await inject(nodeDest, 'NODE_SEA_BLOB', resourceBlob, opts)
 }
 
 module.exports = {
