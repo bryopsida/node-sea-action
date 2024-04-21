@@ -61,6 +61,10 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
+      - name: Find Node
+        id: find-node
+        run: echo "node=$(where node)" >> "$GITHUB_OUTPUT"
+
       - name: Test Local Action
         id: test-action
         uses: ./
@@ -69,6 +73,7 @@ jobs:
           output-dir: build
           executable-name: print-process
           sea-config-path: test-app/sea-config.json
+          node-path: ${{ steps.find-node.outputs.node }}
 
       - uses: actions/upload-artifact@v4
         with:
