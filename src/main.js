@@ -41,7 +41,7 @@ async function run() {
   if (os === 'win32') {
     const signtool =
       'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe'
-    execSync(`${signtool} remove /s ${nodeDest}`)
+    execSync(`'${signtool}' remove /s ${nodeDest}`)
   } else if (os === 'darwin') {
     execSync(`codesign --remove-signature ${nodeDest}`)
   }
