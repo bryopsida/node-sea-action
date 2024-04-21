@@ -1,22 +1,22 @@
-# Node.JS SEA (Single Executable Application) Action
+# Node.js SEA (Single Executable Application) Action
 
 [![GitHub Super-Linter](https://github.com/bryopsida/node-sea-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 ![CI](https://github.com/bryopsida/node-sea-action/actions/workflows/ci.yml/badge.svg)
 
 ## What does this do?
 
-This action takes a bundled JS file and creates a Node.JS SEA.
+This action takes a bundled JS file and creates a Node.js SEA.
 
 ## What does this not do?
 
 - Bundle your JS, you need to bundle your application into a single js file with
   something like esbuild
 - Support importing/requiring npm modules, everything needs to be baked into the
-  bundle, you can include additional assets available through the SEA api but
+  bundle, you can include additional assets available through the SEA API but
   thats it.
-- Sign Code, it takes the steps to strip the original Node.JS signature to give
+- Sign Code, it takes the steps to strip the original Node.js signature to give
   a blank canvas for signing but leaves code signing, if needed, to you.
-- Cross Compilation, the SEA generated will match the arch of the github runner,
+- Cross Compilation, the SEA generated will match the arch of the GitHub runner,
   if you need arm64, you'll need to run the action on a arm64 runner.
 
 ## Usage
@@ -48,7 +48,7 @@ sea-action:
       id: find-node
       run:
         echo "node=$(node -e 'console.log(process.argv[0]);')" >>
-        "$GITHUB_OUTPUT"
+        "$GitHub_OUTPUT"
 
     - name: SEA
       id: sea
