@@ -48,7 +48,7 @@ sea-action:
       id: find-node
       run:
         echo "node=$(node -e 'console.log(process.argv[0]);')" >>
-        "$GitHub_OUTPUT"
+        $env:GITHUB_OUTPUT
 
     - name: SEA
       id: sea
