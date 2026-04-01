@@ -7913,7 +7913,7 @@ exports["default"] = _default;
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const core = __nccwpck_require__(186)
-const { mkdir, cp, readFile } = __nccwpck_require__(977)
+const { mkdir, cp, readFile, readdir } = __nccwpck_require__(977)
 const { resolve, join } = __nccwpck_require__(411)
 const { platform } = __nccwpck_require__(612)
 const { execSync } = __nccwpck_require__(718)
@@ -7955,9 +7955,28 @@ async function run() {
 
   // remove existing code signature on node binary
   if (os === 'win32') {
-    const signtool =
-      '%programfiles(x86)%/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe'
-    execSync(`"${signtool}" remove /s ${nodeDest}`)
+    const sdkDir = join(
+      process.env['ProgramFiles(x86)'],
+      'Windows Kits',
+      '10',
+      'bin'
+    )
+
+    const sdkVersions = (await readdir(sdkDir)).filter(f =>
+      f.startsWith('10.0.')
+    )
+
+    if (!sdkVersions.length)
+      throw new Error(
+        `No Windows 10 SDK version starting with 10.0. found under '${sdkDir}'`
+      )
+
+    // Get latest version
+    const sdkVersion = sdkVersions[sdkVersions.length - 1]
+
+    const signtoolExecutable = join(sdkDir, sdkVersion, 'x86', 'signtool.exe')
+
+    execSync(`"${signtoolExecutable}" remove /s ${nodeDest}`)
   } else if (os === 'darwin') {
     execSync(`codesign --remove-signature ${nodeDest}`)
   }

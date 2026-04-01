@@ -1,5 +1,5 @@
 const core = require('@actions/core')
-const { mkdir, cp, readFile } = require('node:fs/promises')
+const { mkdir, cp, readFile, readdir } = require('node:fs/promises')
 const { resolve, join } = require('node:path')
 const { platform } = require('node:os')
 const { execSync } = require('node:child_process')
@@ -41,9 +41,28 @@ async function run() {
 
   // remove existing code signature on node binary
   if (os === 'win32') {
-    const signtool =
-      '%programfiles(x86)%/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe'
-    execSync(`"${signtool}" remove /s ${nodeDest}`)
+    const sdkDir = join(
+      process.env['ProgramFiles(x86)'],
+      'Windows Kits',
+      '10',
+      'bin'
+    )
+
+    const sdkVersions = (await readdir(sdkDir)).filter(f =>
+      f.startsWith('10.0.')
+    )
+
+    if (!sdkVersions.length)
+      throw new Error(
+        `No Windows 10 SDK version starting with 10.0. found under '${sdkDir}'`
+      )
+
+    // Get latest version
+    const sdkVersion = sdkVersions[sdkVersions.length - 1]
+
+    const signtoolExecutable = join(sdkDir, sdkVersion, 'x86', 'signtool.exe')
+
+    execSync(`"${signtoolExecutable}" remove /s ${nodeDest}`)
   } else if (os === 'darwin') {
     execSync(`codesign --remove-signature ${nodeDest}`)
   }
